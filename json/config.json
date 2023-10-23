@@ -1,0 +1,43 @@
+{
+	"server": {
+		"listen": 8080,
+		"server_name": "virtual.com",
+		"location": {
+			"path": "/",
+			"limit_except": ["GET"],
+			"autoindex": false,
+			"index"        :    ["index.html", "index.htm"],
+			"return": [301, "/upload/"]
+		},
+		"location": {
+			"path": "/upload",
+			"root": "/home",
+			"error_page": [404, "/404.html"],
+			"client_max_body_size": "10M",
+			"limit_except": ["POST", "DELETE"],
+			"autoindex": true,
+			"index": ["list.html"]
+		}
+	},
+	"server": {
+		"listen": 8081,
+		"server_name": "example.com",
+		"location": {
+			"path": "/",
+			"root": "/welcome",
+			"error_page": [404, "/404.html"],
+			"error_page": [301, "/301.html"],
+			"limit_except": ["GET", "POST", "DELETE"],
+			"client_max_body_size": "10M",
+			"autoindex": true,
+			"index": ["welcome.html"],
+			"cgi": ".py"
+		}
+	},
+	"server": {
+		"listen": 8082,
+		"server_name": "fakedomain.com",
+		"root": "/var/www/html",
+		"return": [301, "https://youtube.com/v/dQw4w9WgXcQ"]
+	}
+}
