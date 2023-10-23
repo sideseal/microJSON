@@ -1,10 +1,5 @@
 #include "util.hpp"
 
-void	check_leaks(void)
-{
-	system("leaks a.out");
-}
-
 std::string	convertType(jsonType type)
 {
 	switch (type)
