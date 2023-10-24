@@ -42,7 +42,7 @@ You can incorporate the JsonParser functions into your project to parse and work
 
 - **getJson:** This function returns the currently parsed JSON data, which is stored in a JsonData object. You can insert this data into your application by calling `getJson()`.
 
-- **parseJson:** To parse a JSON file and store the result in the `_json` member variable, use the `parseJson` function with the file path as an argument. It also returns the paresd JsonData object, which you can access for further processing.
+- **parseJson:** To parse a JSON file and store the result in the `_json` member variable, use the `parseJson` function with the file path as an argument. It also returns the parsed JsonData object, which you can access for further processing.
 
 - **findDataByKey:** If you need to retrieve specific JSON objects by a key string, the `findDataByKey` function takes a JsonData object and a key string as parameters and returns a vector of matching objects.
 
@@ -84,4 +84,4 @@ This code is released with no copyright restrictions. You are free to use it wit
 
 ## Special Thanks
 
-Thank you [Hyeonjan](https://profile.intra.42.fr/users/hyeonjan) for guiding me towards a more refined code and for your continued interest. You're truly the Best! :smile:
+Thank you [Hyeonjan](https://profile.intra.42.fr/users/hyeonjan) for guiding me towards a more refined code and for your continued interest. You're truly the best! :smile:
