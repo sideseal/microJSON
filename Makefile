@@ -11,7 +11,7 @@ OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 OBJECTS = $(patsubst %.o,$(OBJDIR)/%.o,$(OBJS))
 
-NAME = a.out
+NAME = test
 
 all: $(NAME)
 
