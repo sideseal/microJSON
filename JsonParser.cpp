@@ -98,6 +98,10 @@ std::vector<JsonData>	JsonParser::findDataByKey
 			results.push_back(jsonObject[i].second);
 			continue;
 		}
+		else
+		{
+			// find values continuously
+		}
 
 		if (jsonObject[i].second._type == TYPE_OBJECT
 			&& !jsonObject[i].second._obj.empty())
@@ -105,6 +109,7 @@ std::vector<JsonData>	JsonParser::findDataByKey
 			std::vector<JsonData>	ret;
 
 			ret = findDataByKey(jsonObject[i].second, key);
+
 			results.insert(results.end(), ret.begin(), ret.end());
 		}
 		else if (jsonObject[i].second._type == TYPE_ARRAY
@@ -118,9 +123,18 @@ std::vector<JsonData>	JsonParser::findDataByKey
 					std::vector<JsonData>	ret;
 
 					ret = findDataByKey(jsonObject[i].second._arr[j], key);
+
 					results.insert(results.end(), ret.begin(), ret.end());
 				}
+				else
+				{
+					// skip for string and primitive values
+				}
 			}
+		}
+		else
+		{
+			// skip for string and primitive values
 		}
 	}
 
@@ -231,6 +245,7 @@ JsonData	JsonParser::parseArray
 		JsonData	element;
 
 		element = parseValue(text, it);
+
 		jsonArray.push_back(element);
 
 		if (it == text.end())
@@ -340,6 +355,7 @@ JsonData	JsonParser::parseObject
 		_skipWhiteSpaces(text, it);
 
 		value = parseValue(text, it);
+
 		jsonObject.push_back(std::make_pair(key, value));
 
 		if (it == text.end())
@@ -348,7 +364,7 @@ JsonData	JsonParser::parseObject
 		}
 		else if (checkKeyValueEnd(text, it) == false)
 		{
-			// character is not included in end parts of object
+			// found character which is not included in end parts of object
 			_errorExit("Error: Object key must starts with double quote");
 		}
 		else 
