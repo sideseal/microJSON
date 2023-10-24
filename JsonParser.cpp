@@ -128,13 +128,13 @@ std::vector<JsonData>	JsonParser::findDataByKey
 				}
 				else
 				{
-					// skip for string and primitive values
+					// skip string and primitive values
 				}
 			}
 		}
 		else
 		{
-			// skip for string and primitive values
+			// skip string and primitive values
 		}
 	}
 
