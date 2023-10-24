@@ -36,7 +36,7 @@ public:
 
 1. **Type Conversion for String Fields:** Since both string and primitive types are stored in the string field, users need to check the type field and then convert the string field to desired data type when working with primitive values. While this approach simplifies parsing, it requires additional type checks.
 
-Our JSON parser, while versatile and easy to use, is not without limitations. It's important to note that it may not cover all edge cases of JSON data. For example, it does not handle Unicode parsing within strings.
+microJSON is easily understandable, but it does have some limitations. It's important to note that it may not cover all edge cases of JSON data. For example, it does not handle Unicode parsing within strings.
 
 ## How to Use
 
