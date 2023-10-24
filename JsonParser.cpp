@@ -217,6 +217,7 @@ JsonData	JsonParser::parseArray
 	}
 	else if (*it == ']')
 	{
+		jsonData._str = "Array";
 		jsonData._type = TYPE_ARRAY;
 		return jsonData;
 	}
@@ -259,6 +260,7 @@ JsonData	JsonParser::parseArray
 		_skipWhiteSpaces(text, it);
 	}
 
+	jsonData._str = "Array";
 	jsonData._type = TYPE_ARRAY;
 	jsonData._arr = jsonArray;
 
@@ -292,6 +294,7 @@ JsonData	JsonParser::parseObject
 	}
 	else if (*it == '}')
 	{
+		jsonData._str = "Object";
 		jsonData._type = TYPE_OBJECT;
 		return jsonData;
 	}
@@ -367,6 +370,7 @@ JsonData	JsonParser::parseObject
 		_skipWhiteSpaces(text, it);
 	}
 
+	jsonData._str = "Object";
 	jsonData._type = TYPE_OBJECT;
 	jsonData._obj = jsonObject;
 
