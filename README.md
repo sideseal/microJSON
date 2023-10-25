@@ -48,11 +48,11 @@ JsonData&               parseJson(std::string const& filepath);
 std::vector<JsonData>   findDataByKey(JsonData const& jsonData, std::string const& key);
 ```
 
-- **getJson:** This function returns the currently parsed JSON data, which is stored in a JsonData object. You can insert this data into your application by calling `getJson()`.
+- **getJson:** This function returns the currently parsed JSON data, which is stored in a JsonData object(`_json`). You can insert this data into your application by calling `getJson()`.
 
 - **parseJson:** To parse a JSON file and store the result in the `_json` member variable, use the `parseJson` function with the file path as an argument. It also returns the parsed JsonData object, which you can access for further processing.
 
-- **findDataByKey:** If you need to retrieve specific JSON objects by a key string, the `findDataByKey` function takes a JsonData object and a key string as parameters and returns a vector of matching objects.
+- **findDataByKey:** If you need to retrieve specific JSON objects by a key string, the `findDataByKey` function takes a JsonData object and a key string as parameters and returns a vector of matching values.
 
 With these functions, you can easily work with JSON data in your application. Simply insert the necessary code into your project to use them as needed. Make sure you need to use C++98-compatible compiler to build project with microJSON.
 
