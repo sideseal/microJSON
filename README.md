@@ -42,6 +42,12 @@ microJSON is easily understandable, but it does have some limitations. It's impo
 
 You can incorporate the JsonParser functions into your project to parse and work with JSON data. Here's how to use them:
 
+```c
+JsonData const&         getJson(void) const;
+JsonData&               parseJson(std::string const& filepath);
+std::vector<JsonData>   findDataByKey(JsonData const& jsonData, std::string const& key);
+```
+
 - **getJson:** This function returns the currently parsed JSON data, which is stored in a JsonData object. You can insert this data into your application by calling `getJson()`.
 
 - **parseJson:** To parse a JSON file and store the result in the `_json` member variable, use the `parseJson` function with the file path as an argument. It also returns the parsed JsonData object, which you can access for further processing.
