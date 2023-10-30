@@ -66,15 +66,23 @@ JsonData&	JsonParser::parseJson(std::string const& filepath)
 	}
 	else
 	{
-		_errorExit("Error: Invalid Json format");
+		_errorExit("Error: Invalid JSON format");
 	}
 
-	start++;
+	if (start == text.end())
+	{
+		_errorExit("Error: JSON is not properly terminated by format");
+	}
+	else
+	{
+		start++;
+	}
+
 	_skipWhiteSpaces(text, start);
 
 	if (start != text.end())
 	{
-		_errorExit("Error: Failed to parse JSON file");
+		_errorExit("Error: Invalid JSON format");
 	}
 	else
 	{
@@ -198,7 +206,7 @@ JsonData	JsonParser::parseValue
 	}
 	else
 	{
-		_errorExit("Error: Invalid object value");
+		_errorExit("Error: Invalid value");
 	}
 
 	return value;
@@ -244,9 +252,15 @@ JsonData	JsonParser::parseArray
 	{
 		JsonData	element;
 
-		element = parseValue(text, it);
-
-		jsonArray.push_back(element);
+		if (it == text.end())
+		{
+			_errorExit("Error: EOF encountered while reading array element");
+		}
+		else
+		{
+			element = parseValue(text, it);
+			jsonArray.push_back(element);
+		}
 
 		if (it == text.end())
 		{
@@ -266,13 +280,12 @@ JsonData	JsonParser::parseArray
 		if (*it == ',')
 		{
 			it++;
+			_skipWhiteSpaces(text, it);
 		}
 		else
 		{
 			// nothing to do
 		}
-
-		_skipWhiteSpaces(text, it);
 	}
 
 	jsonData._str = "Array";
@@ -334,7 +347,7 @@ JsonData	JsonParser::parseObject
 		}
 		else
 		{
-			_errorExit("Error: Object key must starts with double quote");
+			_errorExit("Error: Object key must be a string");
 		}
 
 		_skipWhiteSpaces(text, it);
@@ -354,9 +367,15 @@ JsonData	JsonParser::parseObject
 
 		_skipWhiteSpaces(text, it);
 
-		value = parseValue(text, it);
-
-		jsonObject.push_back(std::make_pair(key, value));
+		if (it == text.end())
+		{
+			_errorExit("Error: EOF encountered while reading object value");
+		}
+		else
+		{
+			value = parseValue(text, it);
+			jsonObject.push_back(std::make_pair(key, value));
+		}
 
 		if (it == text.end())
 		{
@@ -377,13 +396,12 @@ JsonData	JsonParser::parseObject
 		if (*it == ',')
 		{
 			it++;
+			_skipWhiteSpaces(text, it);
 		}
 		else
 		{
 			// nothing to do
 		}
-
-		_skipWhiteSpaces(text, it);
 	}
 
 	jsonData._str = "Object";
@@ -585,6 +603,10 @@ std::string	JsonParser::parsePrimitiveValue
 	{
 		_errorExit("Error: EOF encountered while reading primitive");
 	}
+	else if (!(std::isspace(*it) || *it == ',' || *it == ']' || *it == '}'))
+	{
+		_errorExit("Error: Invalid primitive");
+	}
 	else
 	{
 		it--;
@@ -631,17 +653,73 @@ std::string	JsonParser::getStringData
 	bool		escape = false;
 	char		ch;
 
-	it++;
+	if (*it != '\"')
+	{
+		_errorExit("Error: String must starts with a double quote");
+	}
+	else
+	{
+		it++;
+	}
+
+	if (it == text.end())
+	{
+		_errorExit("Error: EOF encountered while reading string value");
+	}
+	else
+	{
+		// proceed
+	}
+
 	while (it != text.end())
 	{
 		ch = *it;
+
 		if (ch == '\n')
 		{
-			_errorExit("Error: Malformed String Data type");
+			_errorExit("Error: Malformed string data type");
 		}
+		else
+		{
+			// string format is not broken
+		}
+
 		if (escape)
 		{
-			str += ch;
+			switch (ch)
+			{
+				case '\"':
+				case '\\':
+				case '/':
+				case 'b':
+				case 'f':
+				case 'n':
+				case 'r':
+				case 't':
+					str += ch;
+					break;
+				case 'u':
+					str += ch;
+					for (std::size_t i = 0; i < 4; ++i)
+					{
+						it++;
+						if (it == text.end())
+						{
+							_errorExit("Error: Malformed string data type");
+						}
+						else if (isxdigit(*it))
+						{
+							str += *it;
+						}
+						else
+						{
+							_errorExit("Error: Invalid unicode string");
+						}
+					}
+					break;
+				default:
+					_errorExit("Error: Invalid escape sequence in string");
+			}
 			escape = false;
 		}
 		else if (ch == '\\')
@@ -657,6 +735,7 @@ std::string	JsonParser::getStringData
 		{
 			str += ch;
 		}
+
 		it++;
 	}
 

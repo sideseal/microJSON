@@ -1,6 +1,7 @@
 #ifndef __JSONPARSER_HPP__
 #define __JSONPARSER_HPP__
 
+#include <cctype>
 #include <fstream>
 #include <sstream>
 #include <iostream>
