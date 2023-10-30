@@ -6,16 +6,14 @@
 			"path": "/",
 			"limit_except": ["GET"],
 			"autoindex": false,
-			"index"        :    ["index.html", "index.htm"],
-			"return": [301, "/upload/"]
+			"index": ["index.html", "index.htm"]
 		},
 		"location": {
 			"path": "/upload",
-			"root": "/home",
+			"root": "data/",
 			"error_page": [404, "/404.html"],
 			"client_max_body_size": "10M",
 			"limit_except": ["POST", "DELETE"],
-			"autoindex": true,
 			"index": ["list.html"]
 		}
 	},
@@ -24,14 +22,13 @@
 		"server_name": "example.com",
 		"location": {
 			"path": "/",
-			"root": "/welcome",
-			"error_page": [404, "/404.html"],
-			"error_page": [301, "/301.html"],
-			"limit_except": ["GET", "POST", "DELETE"],
-			"client_max_body_size": "10M",
 			"autoindex": true,
-			"index": ["welcome.html"],
-			"cgi": ".py"
+			"limit_except": ["GET"]
+		},
+		"location": {
+			"path": "/cgi",
+			"limit_except": ["GET", "POST"],
+			"cgi": ".php"
 		}
 	},
 	"server": {
